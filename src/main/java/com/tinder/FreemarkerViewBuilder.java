@@ -1,6 +1,5 @@
 package com.tinder;
 
-import com.tinder.ViewBuilder;
 import com.tinder.web.ModelAndView;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
