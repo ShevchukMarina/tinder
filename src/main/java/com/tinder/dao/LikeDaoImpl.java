@@ -2,11 +2,9 @@ package com.tinder.dao;
 
 import com.tinder.model.Like;
 import com.tinder.model.User;
+import java.util.List;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class LikeDaoImpl implements LikeDao{
     private Connection connection;
@@ -35,45 +33,22 @@ public class LikeDaoImpl implements LikeDao{
     }
 
     @Override
-    public Like getByUsers(User from, User to) {
-        String query = "SELECT F.ID, F.NAME, F.PHOTO, T.ID, T.NAME, T.PHOTO FROM LIKES L\n" +
+    public List<User> getUsers(User user) {
+        String query = "SELECT T.ID, T.NAME, T.PHOTO FROM LIKES L\n" +
                 "JOIN USERS F ON L.FROM=F.ID\n" +
                 "JOIN USERS T ON L.TO=T.ID\n" +
-                "WHERE F.ID=? AND T.ID=?";
-        Like result = null;
+                "WHERE F.ID=?";
+        List<User> result = null;
         PreparedStatement statement = null;
         ResultSet rs = null;
 
         try {
             statement = connection.prepareStatement(query);
-            statement.setLong(1, from.getId());
-            statement.setLong(2, to.getId());
+            statement.setLong(1, user.getId());
             rs = statement.executeQuery();
-            result = toLike(rs);
+            result = UserDaoImpl.toUsers(rs);
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-
-        return result;
-    }
-
-    private Like toLike(ResultSet rs) throws SQLException {
-        Like result = null;
-
-        if (rs.next()) {
-            User from = new User(
-                    rs.getLong(1),
-                    rs.getString(2),
-                    rs.getString(3)
-            );
-
-            User to = new User(
-                    rs.getLong(4),
-                    rs.getString(5),
-                    rs.getString(6)
-            );
-
-            result = new Like(from, to);
         }
 
         return result;
