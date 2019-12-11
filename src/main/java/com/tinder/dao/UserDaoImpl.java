@@ -1,11 +1,9 @@
 package com.tinder.dao;
 
 import com.tinder.model.User;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.*;
 
 import static java.sql.Types.BIGINT;
 
@@ -62,6 +60,24 @@ public class UserDaoImpl implements UserDao {
         return result;
     }
 
+    @Override
+    public List<User> getAll() {
+        String query = "SELECT ID, NAME, PHOTO FROM USERS";
+        List<User> result = new ArrayList<>();
+        Statement statement = null;
+        ResultSet rs = null;
+
+        try {
+            statement = connection.createStatement();
+            rs = statement.executeQuery(query);
+            result = toUsers(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     private User toUser(ResultSet rs) throws SQLException {
         User result = null;
 
@@ -73,6 +89,17 @@ public class UserDaoImpl implements UserDao {
             );
         }
 
+        return result;
+    }
+
+    static List<User> toUsers(ResultSet rs) throws SQLException {
+        List<User> result = new ArrayList<>();
+        while(rs.next()) {
+            result.add(new User(
+                    rs.getLong(1),
+                    rs.getString(2),
+                    rs.getString(3)));
+        }
         return result;
     }
 }
