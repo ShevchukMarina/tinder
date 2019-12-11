@@ -5,6 +5,6 @@ import com.tinder.model.User;
 import java.util.List;
 
 public interface LikeService {
-    Like add(Like like);
+    Like update(Like like, boolean delete);
     List<User> getUsers(User user);
 }

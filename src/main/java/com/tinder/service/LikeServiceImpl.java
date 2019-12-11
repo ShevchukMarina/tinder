@@ -14,8 +14,20 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public Like add(Like like) {
-        return likeDao.add(like);
+    public Like update(Like like, boolean delete) {
+        if (likeDao.isPresent(like)) {
+            if (delete) {
+                return likeDao.delete(like);
+            } else {
+                return like;
+            }
+        } else {
+            if (delete) {
+                return like;
+            } else {
+                return likeDao.insert(like);
+            }
+        }
     }
 
     @Override

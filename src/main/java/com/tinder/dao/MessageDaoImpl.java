@@ -14,7 +14,7 @@ public class MessageDaoImpl implements MessageDao {
     }
 
     @Override
-    public Message add(Message message) {
+    public Message insert(Message message) {
         String query = "INSERT INTO MESSAGES VALUES (?, ?, ?, ?)";
         PreparedStatement statement = null;
         ResultSet rs = null;
@@ -42,7 +42,7 @@ public class MessageDaoImpl implements MessageDao {
 
     @Override
     public List<Message> getByUsers(User from, User to) {
-        String query = "SELECT F.ID, F.NAME, F.PHOTO, T.ID, T.NAME, T.PHOTO, M.ID, M.BODY FROM MESSAGES M\n" +
+        String query = "SELECT F.ID, F.NAME, T.ID, T.NAME, M.ID, M.BODY FROM MESSAGES M\n" +
                 "JOIN USERS F ON M.FROM=F.ID\n" +
                 "JOIN USERS T ON M.TO=T.ID\n" +
                 "WHERE F.ID=? AND T.ID=?";
@@ -68,21 +68,19 @@ public class MessageDaoImpl implements MessageDao {
         while(rs.next()) {
             User from = new User(
                     rs.getLong(1),
-                    rs.getString(2),
-                    rs.getString(3)
+                    rs.getString(2)
             );
 
             User to = new User(
-                    rs.getLong(4),
-                    rs.getString(5),
-                    rs.getString(6)
+                    rs.getLong(3),
+                    rs.getString(4)
             );
 
             result.add(new Message(
-                    rs.getLong(7),
+                    rs.getLong(5),
                     from,
                     to,
-                    rs.getString(8)
+                    rs.getString(6)
             ));
         }
         return result;
