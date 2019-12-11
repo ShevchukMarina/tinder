@@ -4,7 +4,7 @@ import com.tinder.model.User;
 import java.util.List;
 
 public interface UserDao {
-    User add(User user);
+    User insert(User user);
     User getByName(String name);
-    List<User> getAll();
+    List<User> getAll(User user);
 }

@@ -16,8 +16,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User add(User user) {
-        String query = "INSERT INTO USERS VALUES (?, ?, ?)";
+    public User insert(User user) {
+        String query = "INSERT INTO USERS VALUES (?, ?)";
         PreparedStatement statement = null;
         ResultSet rs = null;
 
@@ -25,7 +25,6 @@ public class UserDaoImpl implements UserDao {
             statement = connection.prepareStatement(query);
             statement.setNull(1, BIGINT);
             statement.setString(2, user.getName());
-            statement.setString(3, user.getPhoto());
             statement.executeUpdate();
             rs = statement.getGeneratedKeys();
 
@@ -43,7 +42,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getByName(String name) {
-        String query = "SELECT ID, NAME, PHOTO FROM USERS WHERE NAME = ?";
+        String query = "SELECT ID, NAME FROM USERS WHERE NAME = ?";
         User result = null;
         PreparedStatement statement = null;
         ResultSet rs = null;
@@ -61,14 +60,15 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> getAll() {
-        String query = "SELECT ID, NAME, PHOTO FROM USERS";
+    public List<User> getAll(User user) {
+        String query = "SELECT ID, NAME FROM USERS WHERE ID<>?";
         List<User> result = new ArrayList<>();
-        Statement statement = null;
+        PreparedStatement statement = null;
         ResultSet rs = null;
 
         try {
-            statement = connection.createStatement();
+            statement = connection.prepareStatement(query);
+            statement.setLong(1, user.getId());
             rs = statement.executeQuery(query);
             result = toUsers(rs);
         } catch (SQLException e) {
@@ -84,8 +84,7 @@ public class UserDaoImpl implements UserDao {
         if (rs.next()) {
             result = new User(
                     rs.getLong(1),
-                    rs.getString(2),
-                    rs.getString(3)
+                    rs.getString(2)
             );
         }
 
@@ -97,8 +96,7 @@ public class UserDaoImpl implements UserDao {
         while(rs.next()) {
             result.add(new User(
                     rs.getLong(1),
-                    rs.getString(2),
-                    rs.getString(3)));
+                    rs.getString(2)));
         }
         return result;
     }

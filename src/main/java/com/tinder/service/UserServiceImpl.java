@@ -13,17 +13,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User add(User user) {
-        return userDao.add(user);
-    }
-
-    @Override
     public User getByName(String name) {
-        return userDao.getByName(name);
+        User result = userDao.getByName(name);
+        if(result == null) {
+            result = userDao.insert(new User(0, name));
+        }
+        return result;
     }
 
     @Override
-    public List<User> getAll() {
-        return userDao.getAll();
+    public List<User> getAll(User user) {
+        return userDao.getAll(user);
     }
 }
