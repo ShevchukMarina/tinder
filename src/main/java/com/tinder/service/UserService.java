@@ -1,10 +1,9 @@
-package com.tinder.dao;
+package com.tinder.service;
 
 import com.tinder.model.User;
 import java.util.List;
 
-public interface UserDao {
-    User insert(User user);
+public interface UserService {
     User getByName(String name);
     List<User> getAll(User user);
 }

@@ -1,11 +1,9 @@
 package com.tinder.dao;
 
 import com.tinder.model.User;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.*;
 
 import static java.sql.Types.BIGINT;
 
@@ -18,8 +16,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User add(User user) {
-        String query = "INSERT INTO USERS VALUES (?, ?, ?)";
+    public User insert(User user) {
+        String query = "INSERT INTO USERS VALUES (?, ?)";
         PreparedStatement statement = null;
         ResultSet rs = null;
 
@@ -27,7 +25,6 @@ public class UserDaoImpl implements UserDao {
             statement = connection.prepareStatement(query);
             statement.setNull(1, BIGINT);
             statement.setString(2, user.getName());
-            statement.setString(3, user.getPhoto());
             statement.executeUpdate();
             rs = statement.getGeneratedKeys();
 
@@ -45,7 +42,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getByName(String name) {
-        String query = "SELECT ID, NAME, PHOTO FROM USERS WHERE NAME = ?";
+        String query = "SELECT ID, NAME FROM USERS WHERE NAME = ?";
         User result = null;
         PreparedStatement statement = null;
         ResultSet rs = null;
@@ -62,17 +59,45 @@ public class UserDaoImpl implements UserDao {
         return result;
     }
 
+    @Override
+    public List<User> getAll(User user) {
+        String query = "SELECT ID, NAME FROM USERS WHERE ID<>?";
+        List<User> result = new ArrayList<>();
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setLong(1, user.getId());
+            rs = statement.executeQuery(query);
+            result = toUsers(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     private User toUser(ResultSet rs) throws SQLException {
         User result = null;
 
         if (rs.next()) {
             result = new User(
                     rs.getLong(1),
-                    rs.getString(2),
-                    rs.getString(3)
+                    rs.getString(2)
             );
         }
 
+        return result;
+    }
+
+    static List<User> toUsers(ResultSet rs) throws SQLException {
+        List<User> result = new ArrayList<>();
+        while(rs.next()) {
+            result.add(new User(
+                    rs.getLong(1),
+                    rs.getString(2)));
+        }
         return result;
     }
 }

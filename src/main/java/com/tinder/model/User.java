@@ -1,15 +1,12 @@
 package com.tinder.model;
 
 public class User {
-
     private long id;
     private String name;
-    private String photo;
 
-    public User(long id, String name, String photo) {
+    public User(long id, String name) {
         this.id = id;
         this.name = name;
-        this.photo = photo;
     }
 
     public Long getId() {
@@ -26,13 +23,5 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
     }
 }
