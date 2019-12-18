@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MassagesServlet extends HttpServlet {
+public class MessagesServlet extends HttpServlet {
 
     private ViewBuilder viewBuilder;
     private Map<Request, Controller> controllerMap = new HashMap<>();

@@ -8,7 +8,7 @@ import com.tinder.service.*;
 
 import com.tinder.web.servlet.LikedServlet;
 import com.tinder.web.servlet.LoginServlet;
-import com.tinder.web.servlet.MassagesServlet;
+import com.tinder.web.servlet.MessagesServlet;
 import com.tinder.web.servlet.UsersServlet;
 import freemarker.template.Configuration;
 import freemarker.template.Version;
@@ -37,8 +37,8 @@ public class Factory {
 
     public static Configuration getMassagesFreemarkerConfiguration() {
         Configuration cfg = new Configuration(new Version("2.3.23"));
-        cfg.setClassLoaderForTemplateLoading(MassagesServlet.class.getClassLoader(), "templates");
-        cfg.setClassForTemplateLoading(MassagesServlet.class, "/");
+        cfg.setClassLoaderForTemplateLoading(MessagesServlet.class.getClassLoader(), "templates");
+        cfg.setClassForTemplateLoading(MessagesServlet.class, "/");
         cfg.setDefaultEncoding("UTF-8");
         return cfg;
     }
