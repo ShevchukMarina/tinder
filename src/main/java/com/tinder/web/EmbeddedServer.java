@@ -21,7 +21,7 @@ public class EmbeddedServer {
         handler.addServlet(likedHolder, "/liked");
 
         ServletHolder massagesHolder = new ServletHolder(new MassagesServlet());
-        handler.addServlet(massagesHolder, "/massages");
+        handler.addServlet(massagesHolder, "/chat");
 
         ServletHolder loginHolder = new ServletHolder(new LoginServlet());
         handler.addServlet(loginHolder, "/login");
