@@ -19,8 +19,8 @@ public class GetAllUsersController implements Controller {
     @Override
     public ModelAndView process(Request request) {
         Map<String, Object> data = new HashMap<>();
-        List<User> users = userService.getAll(null);
-        data.put("users", users);
+        //List<User> users = userService.getAll(null);
+        //data.put("users", users);
         return ModelAndView.of("people-list", data);
     }
 }

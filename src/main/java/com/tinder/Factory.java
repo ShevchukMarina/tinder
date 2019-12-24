@@ -19,34 +19,10 @@ import java.sql.SQLException;
 
 public class Factory {
 
-    public static Configuration getUsersFreemarkerConfiguration() {
+    public static Configuration getFreemarkerConfiguration(Class servletClass) {
         Configuration cfg = new Configuration(new Version("2.3.23"));
-        cfg.setClassLoaderForTemplateLoading(UsersServlet.class.getClassLoader(), "templates");
-        cfg.setClassForTemplateLoading(UsersServlet.class, "/");
-        cfg.setDefaultEncoding("UTF-8");
-        return cfg;
-    }
-
-    public static Configuration getLikedFreemarkerConfiguration() {
-        Configuration cfg = new Configuration(new Version("2.3.23"));
-        cfg.setClassLoaderForTemplateLoading(LikedServlet.class.getClassLoader(), "templates");
-        cfg.setClassForTemplateLoading(LikedServlet.class, "/");
-        cfg.setDefaultEncoding("UTF-8");
-        return cfg;
-    }
-
-    public static Configuration getMassagesFreemarkerConfiguration() {
-        Configuration cfg = new Configuration(new Version("2.3.23"));
-        cfg.setClassLoaderForTemplateLoading(MessagesServlet.class.getClassLoader(), "templates");
-        cfg.setClassForTemplateLoading(MessagesServlet.class, "/");
-        cfg.setDefaultEncoding("UTF-8");
-        return cfg;
-    }
-
-    public static Configuration getLoginFreemarkerConfiguration() {
-        Configuration cfg = new Configuration(new Version("2.3.23"));
-        cfg.setClassLoaderForTemplateLoading(LoginServlet.class.getClassLoader(), "templates");
-        cfg.setClassForTemplateLoading(LoginServlet.class, "/");
+        cfg.setClassLoaderForTemplateLoading(servletClass.getClassLoader(), "templates");
+        cfg.setClassForTemplateLoading(servletClass, "/");
         cfg.setDefaultEncoding("UTF-8");
         return cfg;
     }

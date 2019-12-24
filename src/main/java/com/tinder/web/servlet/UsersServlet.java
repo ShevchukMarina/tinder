@@ -22,8 +22,8 @@ public class UsersServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        viewBuilder = Factory.getViewBuilder(Factory.getUsersFreemarkerConfiguration());
-        controllerMap.put(Request.of(Request.Method.GET, "/users"), r -> ModelAndView.of("people-list") );
+        viewBuilder = Factory.getViewBuilder(Factory.getFreemarkerConfiguration(UsersServlet.class));
+        controllerMap.put(Request.of(Request.Method.GET, "/users"), Factory.getGetAllUsersController());
     }
 
     @Override
@@ -38,10 +38,10 @@ public class UsersServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         PrintWriter writer = resp.getWriter();
-
-        String viewName = "people-list";
-
-        String view = viewBuilder.buildView(ModelAndView.of(viewName));
+        Request request = Request.of(req.getMethod(), req.getRequestURI(), req.getParameterMap());
+        Controller controller = controllerMap.getOrDefault(request, r -> ModelAndView.of("404"));
+        ModelAndView mv = controller.process(request);
+        String view = viewBuilder.buildView(mv);
         writer.println(view);
     }
 

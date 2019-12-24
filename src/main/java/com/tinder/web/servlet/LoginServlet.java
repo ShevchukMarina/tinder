@@ -24,7 +24,7 @@ public class LoginServlet extends HttpServlet {
     private Map<Request, Controller> controllerMap = new HashMap<>();
     @Override
     public void init() throws ServletException {
-        viewBuilder = Factory.getViewBuilder(Factory.getUsersFreemarkerConfiguration());
+        viewBuilder = Factory.getViewBuilder(Factory.getFreemarkerConfiguration(LoginServlet.class));
         controllerMap.put(Request.of(Request.Method.GET, "/login"), r -> ModelAndView.of("login") );
     }
 
@@ -58,5 +58,6 @@ public class LoginServlet extends HttpServlet {
 
         String view = viewBuilder.buildView(ModelAndView.of(viewName));
         writer.println(view);
-    }}
+    }
+}
 

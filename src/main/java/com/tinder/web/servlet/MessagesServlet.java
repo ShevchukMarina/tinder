@@ -22,7 +22,7 @@ public class MessagesServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        viewBuilder = Factory.getViewBuilder(Factory.getUsersFreemarkerConfiguration());
+        viewBuilder = Factory.getViewBuilder(Factory.getFreemarkerConfiguration(MessagesServlet.class));
         controllerMap.put(Request.of(Request.Method.GET, "/chat"), r -> ModelAndView.of("chat") );
     }
 
@@ -43,4 +43,5 @@ public class MessagesServlet extends HttpServlet {
 
         String view = viewBuilder.buildView(ModelAndView.of(viewName));
         writer.println(view);
-    }}
+    }
+}
