@@ -28,74 +28,18 @@
                     <div class="table-container">
                         <table class="table-users table" border="0">
                             <tbody>
-                                <tr>
-                                    <td width="10">
-                                        <div class="avatar-img">
-                                            <img class="img-circle" src="https://loremflickr.com/200/200/face?random=1" />  
-                                        </div>
-
-                                    </td>
-                                    <td class="align-middle">
-                                        Herbert Hoover
-                                    </td>
-                                    <td class="align-middle">
-                                        Builder Sales Agent
-                                    </td>
-                                    <td  class="align-middle">
-                                        Last Login:  6/10/2017<br><small class="text-muted">5 days ago</small>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="10">
-                                        <div class="avatar-img">
-                                            <img class="img-circle" src="https://loremflickr.com/200/200/face?random=2" />  
-                                        </div>
-
-                                    </td>
-                                    <td class="align-middle">
-                                        Herbert Hoover
-                                    </td>
-                                    <td class="align-middle">
-                                        Builder Sales Agent
-                                    </td>
-                                    <td  class="align-middle">
-                                        Last Login:  6/10/2017<br><small class="text-muted">5 days ago</small>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="10">
-                                        <div class="avatar-img">
-                                            <img class="img-circle" src="https://loremflickr.com/200/200/face?random=3" />  
-                                        </div>
-
-                                    </td>
-                                    <td class="align-middle">
-                                        Herbert Hoover
-                                    </td>
-                                    <td class="align-middle">
-                                        Builder Sales Agent
-                                    </td>
-                                    <td  class="align-middle">
-                                        Last Login:  6/10/2017<br><small class="text-muted">5 days ago</small>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="10">
-                                        <div class="avatar-img">
-                                            <img class="img-circle" src="https://loremflickr.com/200/200/face?random=4" />  
-                                        </div>
-
-                                    </td>
-                                    <td class="align-middle">
-                                        Herbert Hoover
-                                    </td>
-                                    <td class="align-middle">
-                                        Builder Sales Agent
-                                    </td>
-                                    <td  class="align-middle">
-                                        Last Login:  6/10/2017<br><small class="text-muted">5 days ago</small>
-                                    </td>
-                                </tr>
+                                <#list users as u>
+                                    <tr>
+                                        <td width="10">
+                                            <div class="avatar-img">
+                                                <img class="img-circle" src="https://loremflickr.com/200/200/face?random=${u.getId()}" />
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <h4>${u.getName()}</h4>
+                                        </td>
+                                    </tr>
+                                </#list>
                             </tbody>
                         </table>
                     </div>

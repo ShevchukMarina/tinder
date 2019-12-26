@@ -4,6 +4,7 @@ import com.tinder.Factory;
 import com.tinder.ViewBuilder;
 import com.tinder.controller.Controller;
 import com.tinder.web.ModelAndView;
+import com.tinder.web.MyCookie;
 import com.tinder.web.Request;
 
 import javax.servlet.ServletException;
@@ -38,7 +39,7 @@ public class UsersServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         PrintWriter writer = resp.getWriter();
-        Request request = Request.of(req.getMethod(), req.getRequestURI(), req.getParameterMap());
+        Request request = Request.of(req.getMethod(), req.getRequestURI(), req.getParameterMap(), MyCookie.getUser(req));
         Controller controller = controllerMap.getOrDefault(request, r -> ModelAndView.of("404"));
         ModelAndView mv = controller.process(request);
         String view = viewBuilder.buildView(mv);

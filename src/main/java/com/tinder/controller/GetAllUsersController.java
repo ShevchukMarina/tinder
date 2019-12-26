@@ -3,6 +3,7 @@ package com.tinder.controller;
 import com.tinder.model.User;
 import com.tinder.service.UserService;
 import com.tinder.web.ModelAndView;
+import com.tinder.web.MyCookie;
 import com.tinder.web.Request;
 
 import java.util.HashMap;
@@ -19,8 +20,8 @@ public class GetAllUsersController implements Controller {
     @Override
     public ModelAndView process(Request request) {
         Map<String, Object> data = new HashMap<>();
-        //List<User> users = userService.getAll(null);
-        //data.put("users", users);
+        List<User> users = userService.getAll(request.getUser());
+        data.put("users", users);
         return ModelAndView.of("people-list", data);
     }
 }

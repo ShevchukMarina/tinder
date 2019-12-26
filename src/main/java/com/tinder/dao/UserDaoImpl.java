@@ -60,7 +60,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getAll(User user) {
-        String query = "SELECT ID, NAME FROM USERS WHERE ID<>?";
+        String query = "SELECT ID, NAME FROM USERS WHERE ID <> ?";
         List<User> result = new ArrayList<>();
         PreparedStatement statement = null;
         ResultSet rs = null;
@@ -68,7 +68,7 @@ public class UserDaoImpl implements UserDao {
         try {
             statement = connection.prepareStatement(query);
             statement.setLong(1, user.getId());
-            rs = statement.executeQuery(query);
+            rs = statement.executeQuery();
             result = toUsers(rs);
         } catch (SQLException e) {
             e.printStackTrace();

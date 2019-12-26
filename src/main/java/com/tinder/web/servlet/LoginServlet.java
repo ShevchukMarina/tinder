@@ -5,7 +5,7 @@ import com.tinder.ViewBuilder;
 import com.tinder.controller.Controller;
 import com.tinder.web.ModelAndView;
 import com.tinder.web.Request;
-import com.tinder.web.Cookie;
+import com.tinder.web.MyCookie;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -54,8 +54,8 @@ public class LoginServlet extends HttpServlet {
         if (data != null) {
             Optional.ofNullable(data.get("cookie"))
                     .ifPresent(c -> {
-                        Cookie cookie = (Cookie) c;
-                        resp.addCookie(new javax.servlet.http.Cookie(cookie.getName(), cookie.getValue()));
+                        MyCookie myCookie = (MyCookie) c;
+                        resp.addCookie(new javax.servlet.http.Cookie(myCookie.getName(), myCookie.getValue()));
                     });
         }
     }
