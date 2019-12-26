@@ -1,5 +1,6 @@
 package com.tinder.web;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ModelAndView {
@@ -7,13 +8,9 @@ public class ModelAndView {
     private String viewName;
     private Map<String, Object> data;
 
-    public ModelAndView(String viewName, Map<String, Object> data) {
-        this.viewName = viewName;
-        this.data = data;
-    }
-
     public ModelAndView(String viewName) {
         this.viewName = viewName;
+        this.data = new HashMap<>();
     }
 
     public String getViewName() {
@@ -24,19 +21,19 @@ public class ModelAndView {
         this.viewName = viewName;
     }
 
-    public Map<String, Object> getData() {
+    public Map<String, Object> getAllData() {
         return data;
     }
 
-    public void setData(Map<String, Object> data) {
-        this.data = data;
+    public Object getData(String key) {
+        return data.get(key);
+    }
+
+    public void setData(String key, Object value) {
+        this.data.put(key, value);
     }
 
     public static ModelAndView of(String viewName) {
         return new ModelAndView(viewName);
-    }
-
-    public static ModelAndView of (String viewName, Map<String, Object> data) {
-        return new ModelAndView(viewName, data);
     }
 }

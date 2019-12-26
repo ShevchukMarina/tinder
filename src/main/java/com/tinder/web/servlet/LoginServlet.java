@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
         Request request = Request.of(req.getMethod(), req.getRequestURI(), req.getParameterMap());
         Controller controller = controllerMap.getOrDefault(request, r -> ModelAndView.of("404"));
         ModelAndView mv = controller.process(request);
-        processCookies(resp, mv.getData());
+        processCookies(resp, mv.getAllData());
         String view = viewBuilder.buildView(mv);
         writer.println(view);
     }

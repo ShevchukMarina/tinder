@@ -28,20 +28,24 @@
                     <div class="table-container">
                         <table class="table-users table" border="0">
                             <tbody>
-                                <#list users as u>
-                                    <tr>
-                                        <td width="10">
-                                            <div class="avatar-img">
-                                                <img class="img-circle" src="https://loremflickr.com/200/200/face?random=${u.getId()}" />
-                                            </div>
-                                        </td>
-                                        <td class="align-middle">
-                                            <h4>${u.getName()}</h4>
-                                        </td>
-                                    </tr>
-                                </#list>
+                                <tr>
+                                    <td width="10">
+                                        <div class="avatar-img">
+                                            <img class="img-circle" src="https://loremflickr.com/200/200/face?random=${users[0].getId()}" />
+                                        </div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <h4>${users[0].getName()}</h4>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
+
+                        <form action="/users" method="post">
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Yes</button>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">No</button>
+                        </form>
+
                     </div>
                 </div>
             </div>
