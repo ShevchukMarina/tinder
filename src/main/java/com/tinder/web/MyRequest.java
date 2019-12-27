@@ -5,14 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Request {
+public class MyRequest {
 
     private Method method;
     private String uri;
     private Map<String, String[]> params = new HashMap<>();
     private User user;
 
-    public Request(Method method, String uri, Map<String, String[]> params, User user) {
+    public MyRequest(Method method, String uri, Map<String, String[]> params, User user) {
         this.method = method;
         this.uri = uri;
         this.params = params;
@@ -55,16 +55,16 @@ public class Request {
         return params.get(key)[0];
     }
 
-    public static Request of(String method, String uri, Map<String, String[]> params, User user) {
-        return new Request(Method.valueOf(method), uri, params, user);
+    public static MyRequest of(String method, String uri, Map<String, String[]> params, User user) {
+        return new MyRequest(Method.valueOf(method), uri, params, user);
     }
 
-    public static Request of(String method, String uri, Map<String, String[]> params) {
-        return new Request(Method.valueOf(method), uri, params, null);
+    public static MyRequest of(String method, String uri, Map<String, String[]> params) {
+        return new MyRequest(Method.valueOf(method), uri, params, null);
     }
 
-    public static Request of(Method method, String uri){
-        return new Request(method, uri, null, null);
+    public static MyRequest of(Method method, String uri){
+        return new MyRequest(method, uri, null, null);
     }
 
     public enum Method {
@@ -81,8 +81,8 @@ public class Request {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Request request = (Request) o;
-        return method == request.method &&
-                Objects.equals(uri, request.uri);
+        MyRequest myRequest = (MyRequest) o;
+        return method == myRequest.method &&
+                Objects.equals(uri, myRequest.uri);
     }
 }

@@ -1,9 +1,9 @@
 package com.tinder.controller;
 
 import com.tinder.web.ModelAndView;
-import com.tinder.web.Request;
+import com.tinder.web.MyRequest;
 
 public interface Controller {
 
-    ModelAndView process(Request request);
+    ModelAndView process(MyRequest request);
 }

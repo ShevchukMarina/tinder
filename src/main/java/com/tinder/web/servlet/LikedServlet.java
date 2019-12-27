@@ -4,7 +4,7 @@ import com.tinder.Factory;
 import com.tinder.ViewBuilder;
 import com.tinder.controller.Controller;
 import com.tinder.web.ModelAndView;
-import com.tinder.web.Request;
+import com.tinder.web.MyRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,12 +17,12 @@ import java.util.Map;
 
 public class LikedServlet extends HttpServlet {
     private ViewBuilder viewBuilder;
-    private Map<Request, Controller> controllerMap = new HashMap<>();
+    private Map<MyRequest, Controller> controllerMap = new HashMap<>();
 
     @Override
     public void init() throws ServletException {
         viewBuilder = Factory.getViewBuilder(Factory.getFreemarkerConfiguration(LikedServlet.class));
-        controllerMap.put(Request.of(Request.Method.GET, "/liked"), r -> ModelAndView.of("like-page") );
+        controllerMap.put(MyRequest.of(MyRequest.Method.GET, "/liked"), r -> ModelAndView.of("like-page") );
     }
 
     @Override

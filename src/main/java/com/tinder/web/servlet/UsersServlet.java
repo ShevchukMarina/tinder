@@ -6,7 +6,7 @@ import com.tinder.controller.Controller;
 import com.tinder.model.User;
 import com.tinder.web.ModelAndView;
 import com.tinder.web.MyCookie;
-import com.tinder.web.Request;
+import com.tinder.web.MyRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,14 +21,14 @@ import java.util.Map;
 public class UsersServlet extends HttpServlet {
 
     private ViewBuilder viewBuilder;
-    private Map<Request, Controller> controllerMap = new HashMap<>();
+    private Map<MyRequest, Controller> controllerMap = new HashMap<>();
     private ModelAndView mv;
 
     @Override
     public void init() throws ServletException {
         viewBuilder = Factory.getViewBuilder(Factory.getFreemarkerConfiguration(UsersServlet.class));
-        controllerMap.put(Request.of(Request.Method.GET, "/users"), Factory.getGetAllUsersController());
-        controllerMap.put(Request.of(Request.Method.POST, "/users"), Factory.getGetAllUsersController());
+        controllerMap.put(MyRequest.of(MyRequest.Method.GET, "/users"), Factory.getGetAllUsersController());
+        controllerMap.put(MyRequest.of(MyRequest.Method.POST, "/users"), Factory.getGetAllUsersController());
         mv = null;
     }
 
@@ -52,10 +52,10 @@ public class UsersServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         PrintWriter writer = resp.getWriter();
-        Request request = Request.of(req.getMethod(), req.getRequestURI(), req.getParameterMap(), MyCookie.getUser(req));
-        Controller controller = controllerMap.getOrDefault(request, r -> ModelAndView.of("404"));
+        MyRequest myRequest = MyRequest.of(req.getMethod(), req.getRequestURI(), req.getParameterMap(), MyCookie.getUser(req));
+        Controller controller = controllerMap.getOrDefault(myRequest, r -> ModelAndView.of("404"));
         if(mv == null) {
-            mv = controller.process(request);
+            mv = controller.process(myRequest);
         }
         String view = viewBuilder.buildView(mv);
         writer.println(view);

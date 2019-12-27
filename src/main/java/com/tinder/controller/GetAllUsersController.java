@@ -3,7 +3,7 @@ package com.tinder.controller;
 import com.tinder.model.User;
 import com.tinder.service.UserService;
 import com.tinder.web.ModelAndView;
-import com.tinder.web.Request;
+import com.tinder.web.MyRequest;
 import java.util.List;
 
 public class GetAllUsersController implements Controller {
@@ -14,8 +14,8 @@ public class GetAllUsersController implements Controller {
     }
 
     @Override
-    public ModelAndView process(Request request) {
-        List<User> users = userService.getAll(request.getUser());
+    public ModelAndView process(MyRequest myRequest) {
+        List<User> users = userService.getAll(myRequest.getUser());
         ModelAndView mv = ModelAndView.of("people-list");
         mv.setData("users", users);
         return mv;

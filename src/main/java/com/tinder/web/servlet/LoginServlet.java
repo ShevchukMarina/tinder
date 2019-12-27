@@ -4,7 +4,7 @@ import com.tinder.Factory;
 import com.tinder.ViewBuilder;
 import com.tinder.controller.Controller;
 import com.tinder.web.ModelAndView;
-import com.tinder.web.Request;
+import com.tinder.web.MyRequest;
 import com.tinder.web.MyCookie;
 
 import javax.servlet.ServletException;
@@ -21,12 +21,12 @@ import java.util.Optional;
 public class LoginServlet extends HttpServlet {
 
     private ViewBuilder viewBuilder;
-    private Map<Request, Controller> controllerMap = new HashMap<>();
+    private Map<MyRequest, Controller> controllerMap = new HashMap<>();
     @Override
     public void init() throws ServletException {
         viewBuilder = Factory.getViewBuilder(Factory.getFreemarkerConfiguration(LoginServlet.class));
-        controllerMap.put(Request.of(Request.Method.GET, "/login"), r -> ModelAndView.of("login"));
-        controllerMap.put(Request.of(Request.Method.POST, "/login"), Factory.getGetUserByNameController());
+        controllerMap.put(MyRequest.of(MyRequest.Method.GET, "/login"), r -> ModelAndView.of("login"));
+        controllerMap.put(MyRequest.of(MyRequest.Method.POST, "/login"), Factory.getGetUserByNameController());
     }
 
     @Override
@@ -42,9 +42,9 @@ public class LoginServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         PrintWriter writer = resp.getWriter();
-        Request request = Request.of(req.getMethod(), req.getRequestURI(), req.getParameterMap());
-        Controller controller = controllerMap.getOrDefault(request, r -> ModelAndView.of("404"));
-        ModelAndView mv = controller.process(request);
+        MyRequest myRequest = MyRequest.of(req.getMethod(), req.getRequestURI(), req.getParameterMap());
+        Controller controller = controllerMap.getOrDefault(myRequest, r -> ModelAndView.of("404"));
+        ModelAndView mv = controller.process(myRequest);
         processCookies(resp, mv.getAllData());
         String view = viewBuilder.buildView(mv);
         writer.println(view);
