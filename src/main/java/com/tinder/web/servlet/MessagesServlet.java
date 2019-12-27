@@ -4,7 +4,7 @@ import com.tinder.Factory;
 import com.tinder.ViewBuilder;
 import com.tinder.controller.Controller;
 import com.tinder.web.ModelAndView;
-import com.tinder.web.Request;
+import com.tinder.web.MyRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,12 +18,12 @@ import java.util.Map;
 public class MessagesServlet extends HttpServlet {
 
     private ViewBuilder viewBuilder;
-    private Map<Request, Controller> controllerMap = new HashMap<>();
+    private Map<MyRequest, Controller> controllerMap = new HashMap<>();
 
     @Override
     public void init() throws ServletException {
         viewBuilder = Factory.getViewBuilder(Factory.getFreemarkerConfiguration(MessagesServlet.class));
-        controllerMap.put(Request.of(Request.Method.GET, "/chat"), r -> ModelAndView.of("chat") );
+        controllerMap.put(MyRequest.of(MyRequest.Method.GET, "/chat"), r -> ModelAndView.of("chat") );
     }
 
     @Override

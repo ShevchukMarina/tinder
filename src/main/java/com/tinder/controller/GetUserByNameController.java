@@ -4,7 +4,7 @@ import com.tinder.model.User;
 import com.tinder.service.UserService;
 import com.tinder.web.MyCookie;
 import com.tinder.web.ModelAndView;
-import com.tinder.web.Request;
+import com.tinder.web.MyRequest;
 
 public class GetUserByNameController implements Controller {
     private UserService userService;
@@ -14,8 +14,8 @@ public class GetUserByNameController implements Controller {
     }
 
     @Override
-    public ModelAndView process(Request request) {
-        String name = request.getParam("name");
+    public ModelAndView process(MyRequest myRequest) {
+        String name = myRequest.getParam("name");
         User user = userService.getByName(name);
         ModelAndView mv = ModelAndView.of("login");
         mv.setData("user", user);
