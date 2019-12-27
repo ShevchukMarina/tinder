@@ -4,10 +4,7 @@ import com.tinder.model.User;
 import com.tinder.service.UserService;
 import com.tinder.web.ModelAndView;
 import com.tinder.web.Request;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GetAllUsersController implements Controller {
     private UserService userService;
@@ -18,9 +15,9 @@ public class GetAllUsersController implements Controller {
 
     @Override
     public ModelAndView process(Request request) {
-        Map<String, Object> data = new HashMap<>();
-        List<User> users = userService.getAll(null);
-        data.put("users", users);
-        return ModelAndView.of("people-list", data);
+        List<User> users = userService.getAll(request.getUser());
+        ModelAndView mv = ModelAndView.of("people-list");
+        mv.setData("users", users);
+        return mv;
     }
 }

@@ -17,14 +17,13 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User insert(User user) {
-        String query = "INSERT INTO USERS VALUES (?, ?)";
+        String query = "INSERT INTO USERS(name) VALUES (?)";
         PreparedStatement statement = null;
         ResultSet rs = null;
 
         try {
-            statement = connection.prepareStatement(query);
-            statement.setNull(1, BIGINT);
-            statement.setString(2, user.getName());
+            statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, user.getName());
             statement.executeUpdate();
             rs = statement.getGeneratedKeys();
 
@@ -61,7 +60,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getAll(User user) {
-        String query = "SELECT ID, NAME FROM USERS WHERE ID<>?";
+        String query = "SELECT ID, NAME FROM USERS WHERE ID <> ?";
         List<User> result = new ArrayList<>();
         PreparedStatement statement = null;
         ResultSet rs = null;
@@ -69,7 +68,7 @@ public class UserDaoImpl implements UserDao {
         try {
             statement = connection.prepareStatement(query);
             statement.setLong(1, user.getId());
-            rs = statement.executeQuery(query);
+            rs = statement.executeQuery();
             result = toUsers(rs);
         } catch (SQLException e) {
             e.printStackTrace();

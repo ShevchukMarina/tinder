@@ -15,16 +15,15 @@ public class MessageDaoImpl implements MessageDao {
 
     @Override
     public Message insert(Message message) {
-        String query = "INSERT INTO MESSAGES VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO MESSAGES(from, to, body) VALUES (?, ?, ?)";
         PreparedStatement statement = null;
         ResultSet rs = null;
 
         try {
-            statement = connection.prepareStatement(query);
-            statement.setLong(1, message.getId());
-            statement.setLong(2, message.getFrom().getId());
-            statement.setLong(3, message.getTo().getId());
-            statement.setString(4, message.getBody());
+            statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            statement.setLong(1, message.getFrom().getId());
+            statement.setLong(2, message.getTo().getId());
+            statement.setString(3, message.getBody());
             statement.executeUpdate();
             rs = statement.getGeneratedKeys();
 

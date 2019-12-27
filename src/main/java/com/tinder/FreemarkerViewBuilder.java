@@ -23,7 +23,7 @@ public class FreemarkerViewBuilder implements ViewBuilder {
 
         try (StringWriter out = new StringWriter()) {
 
-            template.process(vm.getData(), out);
+            template.process(vm.getAllData(), out);
 
             result = out.getBuffer().toString();
 

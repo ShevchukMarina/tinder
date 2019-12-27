@@ -1,5 +1,6 @@
 package com.tinder.web;
 
+import com.tinder.model.User;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -9,11 +10,21 @@ public class Request {
     private Method method;
     private String uri;
     private Map<String, String[]> params = new HashMap<>();
+    private User user;
 
-    public Request(Method method, String uri, Map<String, String[]> params) {
+    public Request(Method method, String uri, Map<String, String[]> params, User user) {
         this.method = method;
         this.uri = uri;
         this.params = params;
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Method getMethod() {
@@ -44,12 +55,16 @@ public class Request {
         return params.get(key)[0];
     }
 
+    public static Request of(String method, String uri, Map<String, String[]> params, User user) {
+        return new Request(Method.valueOf(method), uri, params, user);
+    }
+
     public static Request of(String method, String uri, Map<String, String[]> params) {
-        return new Request(Method.valueOf(method), uri, params);
+        return new Request(Method.valueOf(method), uri, params, null);
     }
 
     public static Request of(Method method, String uri){
-        return new Request(method, uri, null);
+        return new Request(method, uri, null, null);
     }
 
     public enum Method {
