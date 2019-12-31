@@ -6,10 +6,10 @@ import com.tinder.web.ModelAndView;
 import com.tinder.web.MyRequest;
 import java.util.List;
 
-public class GetAllUsersController implements Controller {
+public class GetUsersController implements Controller {
     private UserService userService;
 
-    public GetAllUsersController(UserService userService) {
+    public GetUsersController(UserService userService) {
         this.userService = userService;
     }
 

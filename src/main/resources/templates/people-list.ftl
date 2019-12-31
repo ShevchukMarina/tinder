@@ -42,8 +42,10 @@
                         </table>
 
                         <form action="/users" method="post">
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">Yes</button>
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">No</button>
+                            <button class="btn btn-lg btn-primary btn-block" id="button-yes" type="submit" onclick="document.getElementById('button-name').value='yes'">Yes</button>
+                            <button class="btn btn-lg btn-primary btn-block" id="button-no" type="submit" onclick="document.getElementById('button-name').value='no'">No</button>
+                            <input type="text" id="button-name" name="button_name" value="" hidden>
+                            <input type="text" name="user_name" value="${users[0].getName()}" hidden>
                         </form>
 
                     </div>

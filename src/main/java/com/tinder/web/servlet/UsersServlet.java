@@ -27,38 +27,43 @@ public class UsersServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         viewBuilder = Factory.getViewBuilder(Factory.getFreemarkerConfiguration(UsersServlet.class));
-        controllerMap.put(MyRequest.of(MyRequest.Method.GET, "/users"), Factory.getGetAllUsersController());
-        controllerMap.put(MyRequest.of(MyRequest.Method.POST, "/users"), Factory.getGetAllUsersController());
-        mv = null;
+        controllerMap.put(MyRequest.of(MyRequest.Method.GET, "/users"), Factory.getGetUsersController());
+        controllerMap.put(MyRequest.of(MyRequest.Method.POST, "/users"), Factory.getSyncLikeController());
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        processRequest(req, resp);
+        processGetRequest(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (mv != null) {
-            List<User> users = (List<User>) mv.getData("users");
-            users.remove(0);
-
-            if (users.size() == 0) {
-                mv = null;
-            }
-        }
-        processRequest(req, resp);
+        processPostRequest(req, resp);
     }
 
-    private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    private void processGetRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         PrintWriter writer = resp.getWriter();
         MyRequest myRequest = MyRequest.of(req.getMethod(), req.getRequestURI(), req.getParameterMap(), MyCookie.getUser(req));
         Controller controller = controllerMap.getOrDefault(myRequest, r -> ModelAndView.of("404"));
-        if(mv == null) {
-            mv = controller.process(myRequest);
-        }
+        mv = controller.process(myRequest);
         String view = viewBuilder.buildView(mv);
         writer.println(view);
     }
 
+    private void processPostRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        MyRequest myRequest = MyRequest.of(req.getMethod(), req.getRequestURI(), req.getParameterMap(), MyCookie.getUser(req));
+        Controller controller = controllerMap.getOrDefault(myRequest, r -> ModelAndView.of("404"));
+        controller.process(myRequest);
+
+        List<User> users = (List<User>) mv.getData("users");
+        users.remove(0);
+
+        if (users.size() == 0) {
+            resp.sendRedirect(req.getContextPath() + "/liked");
+        } else {
+            PrintWriter writer = resp.getWriter();
+            String view = viewBuilder.buildView(mv);
+            writer.println(view);
+        }
+    }
 }

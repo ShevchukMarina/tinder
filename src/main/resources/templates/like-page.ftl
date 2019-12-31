@@ -21,18 +21,14 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-12 col-lg-12 col-md-12 text-center">
-                    <img src="https://robohash.org/68.186.255.198.png" alt="" class="mx-auto rounded-circle img-fluid">
-                    <h3 class="mb-0 text-truncated">User name</h3>
-                    <br>
-                </div>
-                <div class="col-12 col-lg-6">
-                    <button type="button" class="btn btn-outline-danger btn-block"><span class="fa fa-times"></span> Dislike</button>
-                </div>
-                <div class="col-12 col-lg-6">
-                    <button class="btn btn-outline-success btn-block"><span class="fa fa-heart"></span> Like</button>
-                </div>
-                <!--/col-->
+                <#list users as u>
+                    <div class="col-12 col-lg-12 col-md-12 text-center">
+                        <a href="messages.ftl">
+                            <img class="img-circle" src="https://loremflickr.com/200/200/face?random=${u.getId()}" />
+                            <h3 class="mb-0 text-truncated">${u.getName()}</h3>
+                        </a>
+                    </div>
+                </#list>
             </div>
             <!--/row-->
         </div>

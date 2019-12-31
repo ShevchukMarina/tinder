@@ -5,5 +5,5 @@ import com.tinder.web.MyRequest;
 
 public interface Controller {
 
-    ModelAndView process(MyRequest request);
+    ModelAndView process(MyRequest myRequest);
 }
