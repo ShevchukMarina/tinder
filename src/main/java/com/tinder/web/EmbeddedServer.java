@@ -5,7 +5,10 @@ import com.tinder.web.servlet.LikedServlet;
 import com.tinder.web.servlet.LoginServlet;
 import com.tinder.web.servlet.MessagesServlet;
 import com.tinder.web.servlet.UsersServlet;
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import javax.servlet.DispatcherType;
@@ -30,7 +33,14 @@ public class EmbeddedServer {
         handler.addServlet(loginHolder, "/login");
 
         handler.addFilter(UserFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
-        server.setHandler(handler);
+
+        ResourceHandler resourceHandler= new ResourceHandler();
+        resourceHandler.setResourceBase("target/classes/templates");
+        resourceHandler.setDirectoriesListed(true);
+
+        HandlerList handlers = new HandlerList();
+        handlers.setHandlers(new Handler[] {resourceHandler, handler});
+        server.setHandler(handlers);
         server.start();
         server.join();
     }
