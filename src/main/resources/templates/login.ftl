@@ -11,10 +11,10 @@
     <title>Signin Tinder</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="public/css/bootstrap.min.css">
 
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="public/css/style.css">
 </head>
 
 <body class="text-center">

@@ -30,6 +30,8 @@ public class UserFilter implements Filter {
             request.getRequestDispatcher("/login").forward(request, response);
         } else if (reqUrl.equals("/login")) {
             resp.sendRedirect(req.getContextPath() + "/users");
+        } else if (reqUrl.equals("/")) {
+            resp.sendRedirect(req.getContextPath() + "/liked");
         } else {
             chain.doFilter(request, response);
         }

@@ -1,15 +1,9 @@
 package com.tinder;
 
-import com.tinder.controller.Controller;
-import com.tinder.controller.GetAllUsersController;
-import com.tinder.controller.GetUserByNameController;
+import com.tinder.controller.*;
 import com.tinder.dao.*;
 import com.tinder.service.*;
 
-import com.tinder.web.servlet.LikedServlet;
-import com.tinder.web.servlet.LoginServlet;
-import com.tinder.web.servlet.MessagesServlet;
-import com.tinder.web.servlet.UsersServlet;
 import freemarker.template.Configuration;
 import freemarker.template.Version;
 
@@ -70,11 +64,19 @@ public class Factory {
         return new UserServiceImpl(getUserDao());
     }
 
-    public static Controller getGetAllUsersController() {
-        return new GetAllUsersController(getUserService());
+    public static Controller getGetUsersController() {
+        return new GetUsersController(getUserService());
     }
 
     public static Controller getGetUserByNameController() {
         return new GetUserByNameController(getUserService());
+    }
+
+    public static Controller getSyncLikeController() {
+        return new SyncLikeController(getLikeService());
+    }
+
+    public static Controller getGetLikedController() {
+        return new GetLikedController(getLikeService());
     }
 }

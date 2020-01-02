@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="img/favicon.ico">
+    <link rel="icon" href="public/img/favicon.ico">
 
     <title>People list</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="public/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="public/css/style.css">
 </head>
 <body>
 
@@ -42,8 +42,10 @@
                         </table>
 
                         <form action="/users" method="post">
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">Yes</button>
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">No</button>
+                            <button class="btn btn-lg btn-primary btn-block" id="button-yes" type="submit" onclick="document.getElementById('button-name').value='yes'">Yes</button>
+                            <button class="btn btn-lg btn-primary btn-block" id="button-no" type="submit" onclick="document.getElementById('button-name').value='no'">No</button>
+                            <input type="text" id="button-name" name="button_name" value="" hidden>
+                            <input type="text" name="user_name" value="${users[0].getName()}" hidden>
                         </form>
 
                     </div>
