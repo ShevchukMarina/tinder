@@ -59,6 +59,25 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public User getById(long id) {
+        String query = "SELECT ID, NAME FROM USERS WHERE ID = ?";
+        User result = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setLong(1, id);
+            rs = statement.executeQuery();
+            result = toUser(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    @Override
     public List<User> getAll(User user) {
         String query = "SELECT ID, NAME FROM USERS WHERE ID <> ?";
         List<User> result = new ArrayList<>();

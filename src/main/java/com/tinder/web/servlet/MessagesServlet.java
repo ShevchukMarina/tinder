@@ -4,6 +4,7 @@ import com.tinder.Factory;
 import com.tinder.ViewBuilder;
 import com.tinder.controller.Controller;
 import com.tinder.web.ModelAndView;
+import com.tinder.web.MyCookie;
 import com.tinder.web.MyRequest;
 
 import javax.servlet.ServletException;
@@ -23,7 +24,8 @@ public class MessagesServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         viewBuilder = Factory.getViewBuilder(Factory.getFreemarkerConfiguration(MessagesServlet.class));
-        controllerMap.put(MyRequest.of(MyRequest.Method.GET, "/chat"), r -> ModelAndView.of("chat") );
+        controllerMap.put(MyRequest.of(MyRequest.Method.GET, "/messages"), Factory.getGetMessagesController());
+        controllerMap.put(MyRequest.of(MyRequest.Method.POST, "/messages"), Factory.getAddMessageController());
     }
 
     @Override
@@ -38,10 +40,11 @@ public class MessagesServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         PrintWriter writer = resp.getWriter();
-
-        String viewName = "chat";
-
-        String view = viewBuilder.buildView(ModelAndView.of(viewName));
+        MyRequest myRequest = MyRequest.of(req.getMethod(), req.getServletPath(), req.getParameterMap(), MyCookie.getUser(req));
+        myRequest.setParam("id", req.getPathInfo().substring(1));
+        Controller controller = controllerMap.getOrDefault(myRequest, r -> ModelAndView.of("404"));
+        ModelAndView mv = controller.process(myRequest);
+        String view = viewBuilder.buildView(mv);
         writer.println(view);
     }
 }
