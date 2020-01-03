@@ -41,8 +41,16 @@ public class MessagesServlet extends HttpServlet {
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         PrintWriter writer = resp.getWriter();
         MyRequest myRequest = MyRequest.of(req.getMethod(), req.getServletPath(), req.getParameterMap(), MyCookie.getUser(req));
-        myRequest.setParam("id", req.getPathInfo().substring(1));
-        Controller controller = controllerMap.getOrDefault(myRequest, r -> ModelAndView.of("404"));
+        Controller controller;
+
+        String pathInfo = req.getPathInfo();
+        if(pathInfo == null) {
+            controller = r -> ModelAndView.of("404");
+        } else {
+            myRequest.setParam("id", pathInfo.substring(1));
+            controller = controllerMap.getOrDefault(myRequest, r -> ModelAndView.of("404"));
+        }
+
         ModelAndView mv = controller.process(myRequest);
         String view = viewBuilder.buildView(mv);
         writer.println(view);

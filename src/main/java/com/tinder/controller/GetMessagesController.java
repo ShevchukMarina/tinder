@@ -18,11 +18,23 @@ public class GetMessagesController implements Controller {
 
     @Override
     public ModelAndView process(MyRequest myRequest) {
-        User user = Factory.getUserDao().getById(Long.parseLong(myRequest.getParam("id")));
-        List<Message> messages = messageService.getByUsers(myRequest.getUser(), user);
-        ModelAndView mv = ModelAndView.of("chat");
-        mv.setData("user", user);
-        mv.setData("messages", messages);
+        ModelAndView mv;
+
+        try {
+            User user = Factory.getUserDao().getById(Long.parseLong(myRequest.getParam("id")));
+            if (user == null) {
+                mv = ModelAndView.of("404");
+            } else {
+                List<Message> messages = messageService.getByUsers(myRequest.getUser(), user);
+                mv = ModelAndView.of("chat");
+                mv.setData("user", user);
+                mv.setData("messages", messages);
+            }
+
+        } catch(NumberFormatException e) {
+            mv = ModelAndView.of("404");
+        }
+
         return mv;
     }
 }
