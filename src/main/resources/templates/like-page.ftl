@@ -23,7 +23,7 @@
             <div class="row">
                 <#list users as u>
                     <div class="col-12 col-lg-12 col-md-12 text-center">
-                        <a href="messages.ftl">
+                        <a href="messages/${u.getId()}">
                             <img class="img-circle" src="https://loremflickr.com/200/200/face?random=${u.getId()}" />
                             <h3 class="mb-0 text-truncated">${u.getName()}</h3>
                         </a>

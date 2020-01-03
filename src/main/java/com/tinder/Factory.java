@@ -79,4 +79,12 @@ public class Factory {
     public static Controller getGetLikedController() {
         return new GetLikedController(getLikeService());
     }
+
+    public static Controller getGetMessagesController() {
+        return new GetMessagesController(getMessageService());
+    }
+
+    public static Controller getAddMessageController() {
+        return new AddMessageController(getMessageService());
+    }
 }

@@ -9,14 +9,18 @@ public class MyRequest {
 
     private Method method;
     private String uri;
-    private Map<String, String[]> params = new HashMap<>();
+    private Map<String, String[]> params;
     private User user;
 
     public MyRequest(Method method, String uri, Map<String, String[]> params, User user) {
         this.method = method;
         this.uri = uri;
-        this.params = params;
+        this.params = new HashMap<>();
         this.user = user;
+
+        if(params != null) {
+            this.params.putAll(params);
+        }
     }
 
     public User getUser() {
@@ -53,6 +57,11 @@ public class MyRequest {
 
     public String getParam(String key) {
         return params.get(key)[0];
+    }
+
+    public void setParam(String key, String value) {
+        String[] values = {value};
+        params.put(key, values);
     }
 
     public static MyRequest of(String method, String uri, Map<String, String[]> params, User user) {

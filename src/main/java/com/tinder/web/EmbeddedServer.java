@@ -27,19 +27,27 @@ public class EmbeddedServer {
         ServletHolder likedHolder = new ServletHolder(new LikedServlet());
         handler.addServlet(likedHolder, "/liked");
 
-        ServletHolder massagesHolder = new ServletHolder(new MessagesServlet());
-        handler.addServlet(massagesHolder, "/chat");
-
         ServletHolder loginHolder = new ServletHolder(new LoginServlet());
         handler.addServlet(loginHolder, "/login");
 
         handler.addFilter(UserFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
 
-        ResourceHandler resourceHandler= new ResourceHandler();
+        ServletHolder messagesHolder = new ServletHolder(new MessagesServlet());
+        handler.addServlet(messagesHolder, "/messages/*");
+
+        ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setResourceBase("templates");
         resourceHandler.setDirectoriesListed(true);
-        ContextHandler contextHandler= new ContextHandler("/public");
-        contextHandler.setHandler(resourceHandler);
+
+        ResourceHandler resourceHandlerDev = new ResourceHandler();
+        resourceHandlerDev.setResourceBase("src/main/resources/templates");
+        resourceHandlerDev.setDirectoriesListed(true);
+
+        HandlerList resourceHandlers = new HandlerList();
+        resourceHandlers.setHandlers(new Handler[] {resourceHandler, resourceHandlerDev});
+
+        ContextHandler contextHandler = new ContextHandler("/public");
+        contextHandler.setHandler(resourceHandlers);
 
         HandlerList handlers = new HandlerList();
         handlers.setHandlers(new Handler[] {contextHandler, handler});
